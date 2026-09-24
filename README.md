@@ -31,3 +31,5 @@ docker compose up --build
 1. taster 登录后看到春茶-A 通过、夏茶-C 不通过。
 2. 再提交一组高分，新行出现在表头，页面不整页刷新。
 3. observer 登录后没有提交表单。
+
+自动化：`docker compose up` 后运行 `python3 tests/acceptance_test.py`——够线、不够线各交一笔，校验总表含新编号、新行在表头，且页面无“待同步”提示。

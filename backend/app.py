@@ -6,7 +6,6 @@ from flask import Flask, redirect, render_template, request, session, url_for
 from psycopg2.extras import RealDictCursor
 
 from rules import weigh
-from hide_new import sort_boundary, show_pending, pending_sync_message
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET", "tea-cupping-dev-secret")
@@ -63,13 +62,10 @@ def home():
     with db() as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute("SELECT * FROM cuppings ORDER BY id DESC")
         rows = cur.fetchall()
-    rows = sort_boundary(rows)
     return render_template(
         "home.html",
         rows=rows,
         can_write=session.get("role") == "writer",
-        pending_sync=show_pending(),
-        pending_msg=pending_sync_message(),
     )
 
 
